@@ -1,0 +1,355 @@
+{
+	"info": {
+		"_postman_id": "af58de48-f16d-4d2f-82c9-ef04a2242242",
+		"name": "Test Purchase Order Level RMM 0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST new entry",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"PurchaseOrder POST test\", function() {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.json;",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"     pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson.poNumber).to.eql(\"PO0012\");",
+							"    pm.expect(responseJson.quantity).to.eql(3);",
+							"    pm.collectionVariables.set(\"id\", responseJson.id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"paymentReference\": \"PR002\",\n    \"poNumber\": \"PO0012\",\n    \"quantity\": 3,\n    \"customerNumber\": \"CR005\",\n    \"lineItem\": \"LI010\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/purchase/create",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"purchase",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test GET id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"PurchaseOrder GET test\", function() {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.json;",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"     pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson.poNumber).to.eql(\"PO0012\");",
+							"    pm.expect(responseJson.quantity).to.eql(3);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/get/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"get",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test GET bad id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"PurchaseOrder GET test bad id\", function() {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.json;",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"     pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson.error).to.exist;",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/purchase/get/1-1-1-1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"purchase",
+						"get",
+						"1-1-1-1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Update/PUT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"PurchaseOrder PUT test\", function() {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.json;",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"     pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson.poNumber).to.eql(\"PO1111\");",
+							"    pm.expect(responseJson.quantity).to.eql(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"paymentReference\": \"PR001\",\n    \"poNumber\": \"PO1111\",\n    \"quantity\": 0,\n    \"customerNumber\": \"CR005\",\n    \"lineItem\": \"LI010\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000{{location}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000{{location}}"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Update/PUT Invalid UUID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"PurchaseOrder PUT test invalid UUID\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"paymentReference\": \"PR001\",\n    \"poNumber\": \"PO1111\",\n    \"quantity\": 0,\n    \"customerNumber\": \"CR005\",\n    \"lineItem\": \"LI010\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/purchase/update/1-1-1-1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"purchase",
+						"update",
+						"1-1-1-1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TEST Delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"PurchaseOrder DELETE test\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/purchase/delete/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"purchase",
+						"delete",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TEST Delete Invalid UUID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"PurchaseOrder PUT test\", function() {",
+							"    pm.response.to.have.status(200);",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson.error).to.exist;",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"paymentReference\": \"PR001\",\n    \"poNumber\": \"PO1111\",\n    \"quantity\": 0,\n    \"customerNumber\": \"CR005\",\n    \"lineItem\": \"LI010\",\n    \"date\": \"2021-03-17\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/purchase/delete/1-1-1-1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"purchase",
+						"delete",
+						"1-1-1-1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test GET all",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"PurchaseOrder GET test\", function() {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.json;",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"     pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/purchase/getall",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"purchase",
+						"getall"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "location",
+			"value": ""
+		},
+		{
+			"key": "id",
+			"value": ""
+		}
+	]
+}

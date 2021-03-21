@@ -2,98 +2,84 @@
 import {
     Body,
     Controller,
-    Get,
-    Put,
     Path,
     Post,
-    Route,
-    SuccessResponse,
-    Delete,
+    Route
   } from "tsoa";
   import { PurchaseOrder } from "./purchaseOrder";
   import { POService, POCreationParams } from "./poService";
   
 
+  interface ErrorReport {
+    error: String;
+  };
 
   @Route("/purchase")
   export class PurchaseController extends Controller {
 
 
-    @Get("{uuid}")
+    @Post("/get/{uuid}")
     public async getPurchase(@Path() uuid: string
-    ): Promise<PurchaseOrder> {  
-      console.log("get")
+    ): Promise<PurchaseOrder | ErrorReport> {  
       const po : PurchaseOrder = await new POService().getOne(uuid);
-      if (po) return po;
-      this.setStatus(404);
-      return;
+      if (po) {
+        return po;
+      } else {
+        return { error: "Not found"};
+      }
     }
 
-    @Get()
+    @Post("/getall")
     public async getAllPurchases() {
       const pos : PurchaseOrder[] = await new POService().getAll();
-      return pos.filter(function (po:PurchaseOrder) {return !po.isDeleted}).map( function (po:PurchaseOrder)  { return {"href": po.id}});
-      // return  pos;
+      return  pos;
     }
     
   
-    @SuccessResponse("201", "Created") // Custom success response
-    @Post()
+    @Post("/create")
     public async createPurchase(
       @Body() requestBody: POCreationParams
-    ): Promise<PurchaseOrder> {
-      console.log(requestBody);
-      const po = await (new POService()).create(requestBody);
-      this.setStatus(201); // set return status 201
-      this.setHeader("Location", "/purchase/" + po.id)
-      return po;
+    ): Promise<PurchaseOrder | ErrorReport> {
+      try {
+        const po = await (new POService()).create(requestBody);
+        return po;
+      }
+      catch (error) {
+        return { error: "bad JSON"};
+      }
     }
 
-    @SuccessResponse("200", "OK")
-    @Delete("{uuid}")
-    public async delete(@Path() uuid: string) {  
+    @Post("/delete/{uuid}")
+    public async delete(@Path() uuid: string) : Promise<any> {  
       try {
         const success:boolean = await new POService().delete(uuid);
-        if (success) {
-          this.setStatus(200);
-          return ;
-        }
-        else { // already deleted
-          this.setStatus(410);
-          return ;
-        }
+        return {"deleted": success};
       }
-      catch (error) { // not found
-        this.setStatus(404);
-        return;
+      catch (error) {
+        return {error: "not found"};
       }
     }
 
 
 
-    @Put("{uuid}")
+    @Post("/update/{uuid}")
     public async updatePO(
         @Path() uuid: string,
         @Body() requestBody: POCreationParams
-    ): Promise<PurchaseOrder> | null {  
-      console.log("PUT");
-      console.log(uuid);
-      console.log(requestBody);
-      // try {
+    ): Promise<PurchaseOrder | ErrorReport> {  
+      try {
         const po : PurchaseOrder = await new POService().update(uuid, requestBody);
         if (po) {
-          this.setStatus(200);
-          return po; // success
-        } 
-        // failed to find uuid
-        this.setStatus(404);
-         return;
-      // }
-      // catch (error) {
-      //   // wrong format
-      //   this.setStatus(400);
-      //   return;
-      // }
+          return po;
+        }
+        else {
+          return {error: "uuid not found"};
+        }
+      }
+      catch (error) {
+        return { error: "Bad data"};
+      }
+      
     }
 
   }

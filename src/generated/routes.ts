@@ -16,10 +16,18 @@ const models: TsoaRoute.Models = {
             "poNumber": {"dataType":"string","required":true},
             "lineItem": {"dataType":"string","required":true},
             "quantity": {"dataType":"double","required":true},
-            "date": {"dataType":"datetime","default":"2021-03-21T19:01:31.324Z"},
+            "date": {"dataType":"datetime","default":"2021-03-21T20:24:22.680Z"},
             "customerNumber": {"dataType":"string","required":true},
             "paymentReference": {"dataType":"string","required":true},
             "isDeleted": {"dataType":"boolean","default":false},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ErrorReport": {
+        "dataType": "refObject",
+        "properties": {
+            "error": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -44,7 +52,7 @@ export function RegisterRoutes(app: express.Router) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
-        app.get('/purchase/:uuid',
+        app.post('/purchase/get/:uuid',
             function PurchaseController_getPurchase(request: any, response: any, next: any) {
             const args = {
                     uuid: {"in":"path","name":"uuid","required":true,"dataType":"string"},
@@ -66,7 +74,7 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/purchase',
+        app.post('/purchase/getall',
             function PurchaseController_getAllPurchases(request: any, response: any, next: any) {
             const args = {
             };
@@ -87,7 +95,7 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/purchase',
+        app.post('/purchase/create',
             function PurchaseController_createPurchase(request: any, response: any, next: any) {
             const args = {
                     requestBody: {"in":"body","name":"requestBody","required":true,"ref":"POCreationParams"},
@@ -109,7 +117,7 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.delete('/purchase/:uuid',
+        app.post('/purchase/delete/:uuid',
             function PurchaseController_delete(request: any, response: any, next: any) {
             const args = {
                     uuid: {"in":"path","name":"uuid","required":true,"dataType":"string"},
@@ -131,7 +139,7 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.put('/purchase/:uuid',
+        app.post('/purchase/update/:uuid',
             function PurchaseController_updatePO(request: any, response: any, next: any) {
             const args = {
                     uuid: {"in":"path","name":"uuid","required":true,"dataType":"string"},
