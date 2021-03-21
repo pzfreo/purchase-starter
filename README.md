@@ -1,2 +1,5 @@
 # purchase-starter
-Starter for purchase order service 
+
+A simple starter project for building a RESTful service 
+
+* Uses tsoa, typeorm, express
