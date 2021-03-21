@@ -1,12 +1,7 @@
-// src/app.ts
 import express from "express";
 import bodyParser from "body-parser";
 import { RegisterRoutes } from "./generated/routes";
-import * as swaggerUi from "swagger-ui-express";
-const swaggerDocument = require('./generated/swagger.json');
 import { ValidateError } from "tsoa";
-
-
 
 export const app = express();
 
@@ -18,7 +13,6 @@ app.use(
 );
 app.use(bodyParser.json());
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(function errorHandler(
   err: unknown,

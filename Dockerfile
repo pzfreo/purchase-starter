@@ -6,9 +6,8 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN npm install
-RUN npm install typescript -g
-RUN tsc
+RUN yarn install
+RUN yarn add typescript ts-node tsoa -g
 
 EXPOSE 8000
 
