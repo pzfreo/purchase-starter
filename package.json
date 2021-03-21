@@ -1,13 +1,13 @@
 {
-  "name": "purchase-tsoa",
+  "name": "purchase-starter",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/app.ts",
   "repository": "git@github.com:pzfreo/purchase-tsoa.git",
   "author": "Paul Fremantle <pzfreo@github.com>",
   "license": "Apache-2.0",
   "scripts": {
-    "start": "tsoa spec-and-routes && ts-node src/app.ts",
-    "dev": "nodemon --watch . --ext ts --exec \"tsoa spec-and-routes && ts-node src/app.ts\"",
+    "start": "tsoa routes && ts-node src/app.ts",
+    "dev": "nodemon --watch . --ext ts --exec \"tsoa routes && ts-node src/app.ts\"",
     "test": "newman run purchase-tests.postman_collection.json",
     "test-dev": "nodemon --watch . --ext ts --exec \"sleep 5 && newman run purchase-tests.postman_collection.json\"",
     "build": "tsc",
@@ -17,7 +17,6 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "pg": "^8.5.1",
-    "swagger-ui-express": "^4.1.6",
     "tsoa": "^3.6.0",
     "typescript": "^4.2.3"
   },
@@ -25,7 +24,6 @@
     "@types/body-parser": "^1.19.0",
     "@types/express": "^4.17.11",
     "@types/node": "^14.14.35",
-    "@types/swagger-ui-express": "^4.1.2",
     "concurrently": "^6.0.0",
     "nodemon": "^2.0.7",
     "ts-node": "^9.1.1",
