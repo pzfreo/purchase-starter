@@ -7,14 +7,13 @@
   "license": "Apache-2.0",
   "scripts": {
     "start": "tsoa routes && ts-node src/app.ts",
-    "dev": "nodemon --watch . --ext ts --exec \"tsoa routes && ts-node src/app.ts\"",
+    "dev": "nodemon --watch . --ignore 'src/generated/routes.ts' --ext ts --exec \"tsoa routes && ts-node src/app.ts\"",
     "test": "newman run RMMlevel0.postman_collection.json",
-    "test-dev": "nodemon --watch . --ext ts --exec \"sleep 5 && newman run RMMlevel0.postman_collection.json\"",
+    "test-dev": "nodemon --watch . --ignore 'src/generated/routes.ts' --ext ts --exec \"sleep 5 && newman run RMMlevel0.postman_collection.json\"",
     "build": "tsc",
     "watch": "tsc --watch"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "pg": "^8.5.1",
     "tsoa": "^3.6.0",

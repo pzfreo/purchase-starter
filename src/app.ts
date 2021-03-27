@@ -1,19 +1,13 @@
 import express from "express";
-import bodyParser from "body-parser";
 import { RegisterRoutes } from "./generated/routes";
 import { ValidateError } from "tsoa";
 
 export const app = express();
 
-// Use body parser to read sent json payloads
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
-app.use(bodyParser.json());
+// read sent json payloads
+app.use(express.json());
 
-
+// standard type validation for tsoa
 app.use(function errorHandler(
   err: unknown,
   req: express.Request,
