@@ -8,7 +8,7 @@
   "scripts": {
     "start": "tsoa routes && ts-node src/app.ts",
     "dev": "nodemon --watch . --ignore 'src/generated/routes.ts' --ext ts --exec \"tsoa routes && ts-node src/app.ts\"",
-    "test-bad": "newman run RMMlevel0.postman_collection.json",
+    "test-rmm0": "newman run RMMlevel0.postman_collection.json",
     "test-good": "newman run purchase-tests.postman_collection.json",
     "test-dev": "nodemon --watch . --ignore 'src/generated/routes.ts' --ext ts --exec \"sleep 5 && newman run purchase-tests.postman_collection.json\"",
     "build": "tsc",
