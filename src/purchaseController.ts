@@ -11,8 +11,8 @@ import {
   
 
   interface ErrorReport {
-    error: String;
-  };
+    error: string;
+  }
 
   @Route("/purchase")
   export class PurchaseController extends Controller {
@@ -30,7 +30,7 @@ import {
     }
 
     @Post("/getall")
-    public async getAllPurchases() {
+    public async getAllPurchases() : Promise<any> {
       const pos : PurchaseOrder[] = await new POService().getAll();
       return  pos;
     }
