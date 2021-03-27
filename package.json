@@ -8,8 +8,8 @@
   "scripts": {
     "start": "tsoa routes && ts-node src/app.ts",
     "dev": "nodemon --watch . --ext ts --exec \"tsoa routes && ts-node src/app.ts\"",
-    "test": "newman run purchase-tests.postman_collection.json",
-    "test-dev": "nodemon --watch . --ext ts --exec \"sleep 5 && newman run purchase-tests.postman_collection.json\"",
+    "test": "newman run RMMlevel0.postman_collection.json",
+    "test-dev": "nodemon --watch . --ext ts --exec \"sleep 5 && newman run RMMlevel0.postman_collection.json\"",
     "build": "tsc",
     "watch": "tsc --watch"
   },
