@@ -11,6 +11,7 @@
     "test-rmm0": "newman run RMMlevel0.postman_collection.json",
     "test-good": "newman run purchase-tests.postman_collection.json",
     "test-dev": "nodemon --watch . --ignore 'src/generated/routes.ts' --ext ts --exec \"sleep 5 && newman run purchase-tests.postman_collection.json\"",
+    "lint": "yarn run eslint src/",
     "build": "tsc",
     "watch": "tsc --watch"
   },

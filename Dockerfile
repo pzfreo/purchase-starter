@@ -1,14 +1,11 @@
-FROM node:15
+FROM node:15.12.0-buster-slim
 
 RUN mkdir -p /usr/src/app
-
 WORKDIR /usr/src/app
-
 COPY . .
 
 RUN yarn install
-RUN yarn add typescript ts-node tsoa -g
+RUN yarn global add typescript ts-node tsoa
 
 EXPOSE 8000
-
-CMD ["npm", "run", "start"]
+CMD ["yarn", "run", "start"]
